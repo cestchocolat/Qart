@@ -63,6 +63,312 @@
         </div>
       </div>
     </section>
+
+    <section class="difference-section" aria-labelledby="difference-title">
+      <div class="difference-shell">
+        <p class="difference-kicker">Our Difference</p>
+        <h2 id="difference-title">Why Clients Choose <span>Qart</span></h2>
+
+        <div class="difference-list">
+          <article class="difference-item">
+            <span class="difference-number">01</span>
+            <div>
+              <h3>Curated Luxury Listings</h3>
+              <p>
+                Every property in our portfolio is personally vetted for
+                quality, location, and investment potential. We present only
+                the finest.
+              </p>
+            </div>
+          </article>
+
+          <article class="difference-item">
+            <span class="difference-number">02</span>
+            <div>
+              <h3>Personalized Consultation</h3>
+              <p>
+                Your dedicated advisor understands your lifestyle, preferences,
+                and goals — guiding you from first inquiry to key handover.
+              </p>
+            </div>
+          </article>
+
+          <article class="difference-item">
+            <span class="difference-number">03</span>
+            <div>
+              <h3>Trusted Bangkok Expertise</h3>
+              <p>
+                Over a decade navigating Bangkok's luxury market. We know every
+                building, every developer, and every opportunity before it lists.
+              </p>
+            </div>
+          </article>
+
+          <article class="difference-item">
+            <span class="difference-number">04</span>
+            <div>
+              <h3>International Client Support</h3>
+              <p>
+                Seamless service in English and Thai, with tailored guidance
+                for international buyers and relocations.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="consultation-section" aria-labelledby="consultation-title">
+      <div class="consultation-shell">
+        <div class="consultation-copy">
+          <h2 id="consultation-title">Begin Your Search with <span>Qart</span></h2>
+          <p>
+            Tell us about your preferred lifestyle, locations, and requirements.
+            Our team will curate a personalized selection of luxury residences
+            across Bangkok.
+          </p>
+          <small>
+            Discreet guidance for rentals, relocations, and luxury residences.
+          </small>
+        </div>
+
+        <form class="consultation-form" action="#" method="post">
+          <label>
+            <span>Full Name</span>
+            <input type="text" name="full-name" autocomplete="name" />
+          </label>
+
+          <label>
+            <span>WhatsApp / Phone Number</span>
+            <input type="tel" name="phone" autocomplete="tel" />
+          </label>
+
+          <label>
+            <span>Email Address</span>
+            <input type="email" name="email" autocomplete="email" />
+          </label>
+
+          <label class="field-with-other">
+            <span>Preferred Areas</span>
+            <select name="preferred-areas" data-other-target="preferred-area-other">
+              <option value="">Select preferred area</option>
+              <option>Central</option>
+              <option>Thonglor</option>
+              <option>Riverside</option>
+              <option>Sathorn</option>
+              <option>Asoke</option>
+              <option>Phrom Phong</option>
+              <option>Other</option>
+            </select>
+            <input
+              class="other-field"
+              id="preferred-area-other"
+              type="text"
+              name="preferred-area-other"
+              placeholder="Preferred area"
+              hidden
+            />
+          </label>
+
+          <label class="field-with-other">
+            <span>Property Type</span>
+            <select name="property-type" data-other-target="property-type-other">
+              <option value="">Select property type</option>
+              <option>Condo</option>
+              <option>Penthouse</option>
+              <option>House</option>
+              <option>Other</option>
+            </select>
+            <input
+              class="other-field"
+              id="property-type-other"
+              type="text"
+              name="property-type-other"
+              placeholder="Property type"
+              hidden
+            />
+          </label>
+
+          <label>
+            <span>Bedrooms</span>
+            <select name="bedrooms">
+              <option value="">Select bedrooms</option>
+              <option>1 Bedroom</option>
+              <option>2 Bedrooms</option>
+              <option>3 Bedrooms</option>
+              <option>4 Bedrooms</option>
+              <option>5 Bedrooms+</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Budget Range</span>
+            <input type="text" name="budget" placeholder="THB / month or purchase budget" />
+          </label>
+
+          <label>
+            <span>Move-in Date</span>
+            <input type="date" name="move-in-date" />
+          </label>
+
+          <label class="form-wide">
+            <span>Additional Requirements</span>
+            <textarea name="requirements" rows="5"></textarea>
+          </label>
+
+          <p class="consultation-status enquiry-status form-wide" role="status" aria-live="polite"></p>
+
+          <button type="submit">Request Private Consultation</button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-shell">
+        <div class="footer-main">
+          <div class="footer-brand">
+            <a class="footer-logo" href="#">Qart</a>
+            <p>
+              Curated luxury residences and personalized property consultation
+              in Bangkok.
+            </p>
+          </div>
+
+          <nav class="footer-nav" aria-label="Footer navigation">
+            <a href="#">Home</a>
+            <a href="#">Areas</a>
+            <a href="#">Properties</a>
+            <a href="#">Consultation</a>
+            <a href="#">Contact</a>
+          </nav>
+
+          <address class="footer-contact">
+            <span>WHATSAPP</span>
+            <a href="tel:+66612901977">+66 61 290 1977</a>
+          </address>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 Qart. All rights reserved.</p>
+          <p>Designed for modern luxury living</p>
+        </div>
+      </div>
+    </footer>
+
+    <div class="enquiry-modal" id="residence-enquiry" aria-hidden="true">
+      <div class="enquiry-backdrop" data-close-enquiry></div>
+      <div
+        class="enquiry-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="enquiry-title"
+      >
+        <button class="enquiry-x" type="button" data-close-enquiry aria-label="Close enquiry">
+          ×
+        </button>
+        <div class="enquiry-heading">
+          <p>Interested Residence: <span id="enquiry-residence-name">Residence</span></p>
+          <h2 id="enquiry-title">Private Residence Enquiry</h2>
+          <p>
+            Please leave your details and Qart will contact you with curated
+            availability, pricing, and private viewing options.
+          </p>
+        </div>
+
+        <p class="enquiry-status" role="status" aria-live="polite"></p>
+
+        <form class="enquiry-form" action="#" method="post">
+          <input type="hidden" name="residence" id="enquiry-residence-input" />
+
+          <label class="enquiry-left">
+            <span>Full Name</span>
+            <input type="text" name="full-name" autocomplete="name" />
+          </label>
+
+          <label class="enquiry-right">
+            <span>WhatsApp / Phone Number</span>
+            <input type="tel" name="phone" autocomplete="tel" />
+          </label>
+
+          <label class="enquiry-left">
+            <span>Email Address</span>
+            <input type="email" name="email" autocomplete="email" />
+          </label>
+
+          <label class="enquiry-right">
+            <span>Preferred Areas</span>
+            <select name="preferred-areas">
+              <option value="">Select preferred area</option>
+              <option>Central</option>
+              <option>Thonglor</option>
+              <option>Asoke / Phrom Phong</option>
+              <option>Sathorn</option>
+              <option>Riverside</option>
+              <option>Pet Friendly</option>
+              <option>Other</option>
+            </select>
+          </label>
+
+          <label class="enquiry-left">
+            <span>Property Type</span>
+            <select name="property-type">
+              <option value="">Select property type</option>
+              <option>Condominium</option>
+              <option>Penthouse</option>
+              <option>Duplex</option>
+              <option>Villa</option>
+              <option>Townhouse</option>
+            </select>
+          </label>
+
+          <label class="enquiry-right">
+            <span>Bedrooms</span>
+            <select name="bedrooms">
+              <option value="">Select bedrooms</option>
+              <option>Studio</option>
+              <option>1 Bedroom</option>
+              <option>2 Bedrooms</option>
+              <option>3 Bedrooms</option>
+              <option>4+ Bedrooms</option>
+            </select>
+          </label>
+
+          <label class="enquiry-left">
+            <span>Budget Range</span>
+            <input type="text" name="budget" />
+          </label>
+
+          <label class="enquiry-right">
+            <span>Move-in Date</span>
+            <input type="date" name="move-in-date" />
+          </label>
+
+          <label class="enquiry-left">
+            <span>Additional Requirements</span>
+            <textarea name="message" rows="4"></textarea>
+          </label>
+
+          <fieldset class="enquiry-pet enquiry-right">
+            <legend>Pet Friendly?</legend>
+            <div>
+              <label>
+                <input type="radio" name="pet-friendly" value="yes" />
+                <span>Yes</span>
+              </label>
+              <label>
+                <input type="radio" name="pet-friendly" value="no" />
+                <span>No</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="enquiry-actions">
+            <button type="submit">Submit Enquiry</button>
+            <button type="button" data-close-enquiry>Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
