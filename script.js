@@ -5,6 +5,18 @@ const images = [
   "assets/qart-luxury-hero-v2.png",
 ];
 
+const projectImages = {
+  "98 Wireless": "assets/98 wireless.png",
+  "Sindhorn Residence": "assets/Sindhorn.jpg",
+  "The Residences at Sindhorn Kempinski": "assets/sindhorn-kempin-residence.jpg",
+  "Sindhorn Tonson": "assets/Sindhorn Tonson.jpg",
+  "Scope Langsuan": "assets/Scope Langsuan.png",
+  "Magnolias Ratchadamri Boulevard": "assets/Magnolias Ratchadamri.jpg",
+  "185 Rajadamri": "assets/185.jpg",
+  "The Residences at St. Regis Bangkok": "assets/The Residences at The St..jpg",
+  "MARQUE Sukhumvit": "assets/Marque.jpg",
+};
+
 // Paste the deployed Google Apps Script Web App URL here.
 const ENQUIRY_ENDPOINT = "https://script.google.com/macros/s/AKfycbzNmFKp71Uy9HerB85c-4S-AIpG8dHvLIkeMJGGfv8AZT9tT2Fvnv_cyiz9ls9XxBLN/exec";
 
@@ -18,10 +30,9 @@ const areas = [
       ["The Residences at Sindhorn Kempinski", "Hotel-serviced residences with calm wellness amenities and an elegant garden-side arrival."],
       ["Sindhorn Tonson", "A polished central address with serene residential privacy and sophisticated city convenience."],
       ["Scope Langsuan", "Private freehold residences with refined materials, park proximity, and discreet hotel-inspired service."],
-      ["Q Langsuan", "A calm city residence moments from Lumpini Park with clean layouts and enduring central appeal."],
       ["Magnolias Ratchadamri Boulevard", "Skyline residences moments from the Royal Bangkok Sports Club and central retail destinations."],
       ["185 Rajadamri", "Freehold residences beside the park with gracious proportions and classic central Bangkok prestige."],
-      ["The Residences at The St. Regis Bangkok", "A branded residence with polished service, refined interiors, and rare Rajadamri convenience."],
+      ["The Residences at St. Regis Bangkok", "A branded residence with polished service, refined interiors, and rare Rajadamri convenience."],
     ],
   },
   {
@@ -126,7 +137,7 @@ function renderProjects(areaId) {
         ([name, description], index) => `
           <article class="property-card image-pos-${index + 1}">
             <div class="property-image">
-              <img src="${images[index % images.length]}" alt="${name} luxury Bangkok residence" />
+              <img src="${projectImages[name] ?? images[index % images.length]}" alt="${name} luxury Bangkok residence" />
             </div>
             <div class="property-content">
               <h3>${name}</h3>
