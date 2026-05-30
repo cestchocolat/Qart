@@ -14,7 +14,19 @@ const projectImages = {
   "Magnolias Ratchadamri Boulevard": "assets/Magnolias Ratchadamri.jpg",
   "185 Rajadamri": "assets/185.jpg",
   "The Residences at St. Regis Bangkok": "assets/The Residences at The St..jpg",
+  "The Strand Thonglor": "assets/The strand.jpg",
+  "KHUN by Yoo": "assets/Khun by Yoo.jpg",
+  "Tela Thonglor": "assets/Tela.jpg",
+  "The Monument Thong Lo": "assets/The monument.jpg",
+  "The Reserve 61 Hideaway": "assets/The Reserve Hideaway.png",
+  "The Reserve 61 Sukhumvit": "assets/The Reserve Sukhumvot 61.png",
+  "BEATNIQ Sukhumvit 32": "assets/beatniq.jpg",
   "MARQUE Sukhumvit": "assets/Marque.jpg",
+  "The Diplomat 39": "assets/The Diplomat 39.jpg",
+  "MUNIQ Sukhumvit 23": "assets/Muniq 23.jpg",
+  "39 by Sansiri": "assets/39 by Sansiri.jpg",
+  "Le Raffine Sukhumvit 39": "assets/Le-Raffine.jpg",
+  "The ESSE at Singha Complex": "assets/The Esse.jpg",
 };
 
 // Paste the deployed Google Apps Script Web App URL here.
@@ -43,6 +55,7 @@ const areas = [
       ["KHUN by Yoo", "Design-led residences with expressive interiors, strong amenities, and a distinctive Thonglor personality."],
       ["Tela Thonglor", "Low-density luxury residences with expansive layouts, privacy, and an established Thonglor address."],
       ["The Monument Thong Lo", "Large-format residences with rare privacy, family-scale layouts, and a quietly prestigious presence."],
+      ["The Reserve 61 Sukhumvit", "A refined Sukhumvit residence with calm contemporary interiors and convenient access to Thonglor and Ekkamai."],
       ["The Reserve 61 Hideaway", "A discreet residential retreat with calm interiors and easy access to Thonglor and Ekkamai."],
     ],
   },
