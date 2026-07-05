@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Riverside or Sukhumvit Bangkok address">
+  <rect width="1200" height="760" fill="#fff"/>
+  <path d="M0 535c170-70 300-70 470 0s310 70 520 0 210-70 210-70v295H0z" fill="#e8dcc8"/>
+  <path d="M0 585c170-70 300-70 470 0s310 70 520 0 210-70 210-70" fill="none" stroke="#b79257" stroke-width="8"/>
+  <rect x="180" y="185" width="145" height="330" fill="#2b2925"/>
+  <rect x="380" y="255" width="145" height="260" fill="#6f6557"/>
+  <rect x="735" y="155" width="250" height="360" fill="#dfcaa3"/>
+  <circle cx="675" cy="260" r="105" fill="#b79257" opacity=".55"/>
+</svg>

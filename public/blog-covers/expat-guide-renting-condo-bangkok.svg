@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Expat guide to renting a condo in Bangkok">
+  <rect width="1200" height="760" fill="#f7f2ea"/>
+  <rect x="160" y="130" width="880" height="500" rx="8" fill="#fff" stroke="#e8dcc8" stroke-width="8"/>
+  <path d="M260 260h420M260 350h300M260 440h470" stroke="#2b2925" stroke-width="20" stroke-linecap="round"/>
+  <circle cx="860" cy="335" r="105" fill="#dfcaa3"/>
+  <path d="M812 335h96M860 287v96" stroke="#b79257" stroke-width="12" stroke-linecap="round"/>
+  <path d="M760 560h210" stroke="#b79257" stroke-width="10" stroke-linecap="round"/>
+</svg>

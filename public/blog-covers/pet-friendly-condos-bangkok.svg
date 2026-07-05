@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Pet-friendly condos in Bangkok">
+  <rect width="1200" height="760" fill="#f8f4ec"/>
+  <rect x="160" y="140" width="350" height="470" rx="18" fill="#2b2925"/>
+  <rect x="585" y="105" width="455" height="505" rx="18" fill="#e8dcc8"/>
+  <circle cx="680" cy="395" r="66" fill="#b79257"/>
+  <circle cx="595" cy="320" r="42" fill="#dfcaa3"/>
+  <circle cx="775" cy="320" r="42" fill="#dfcaa3"/>
+  <circle cx="625" cy="490" r="44" fill="#dfcaa3"/>
+  <circle cx="735" cy="490" r="44" fill="#dfcaa3"/>
+  <path d="M235 215h200M235 310h200M235 405h200M235 500h200" stroke="#fff" stroke-width="10" opacity=".72"/>
+</svg>

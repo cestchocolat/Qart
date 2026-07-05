@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Family-friendly Bangkok condos">
+  <rect width="1200" height="760" fill="#f8f4ec"/>
+  <path d="M190 610V292l410-180 410 180v318" fill="#e8dcc8"/>
+  <path d="M600 112 190 292v318h820V292z" fill="none" stroke="#2b2925" stroke-width="12" stroke-linejoin="round"/>
+  <rect x="330" y="380" width="150" height="230" fill="#b79257"/>
+  <rect x="560" y="360" width="110" height="110" fill="#fff"/>
+  <rect x="735" y="360" width="110" height="110" fill="#fff"/>
+  <circle cx="905" cy="195" r="95" fill="#dfcaa3"/>
+</svg>
