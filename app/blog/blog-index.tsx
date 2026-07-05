@@ -6,7 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { BlogNavigation } from "./blog-navigation";
 import { SiteFooter } from "@/components/qart/site-footer";
 import type { BlogPost } from "@/lib/blog-data";
-import { blogCategories, formatDate } from "@/lib/blog-data";
+import { formatDate } from "@/lib/blog-data";
 
 const POSTS_PER_PAGE = 9;
 
@@ -41,6 +41,11 @@ export function BlogIndex({ posts }: { posts: BlogPost[] }) {
       return matchesCategory && searchableText.includes(normalizedQuery);
     });
   }, [category, posts, query]);
+
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(posts.map((post) => post.category))).sort()],
+    [posts],
+  );
 
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
   const currentPage = Math.min(requestedPage, totalPages);
@@ -98,7 +103,7 @@ export function BlogIndex({ posts }: { posts: BlogPost[] }) {
 
       <section className="blog-shell blog-toolbar journal-toolbar" aria-label="Blog filters">
         <div className="category-list">
-          {blogCategories.map((item) => (
+          {categories.map((item) => (
             <button
               className={item === category ? "active" : ""}
               key={item}

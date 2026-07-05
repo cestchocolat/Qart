@@ -4,26 +4,27 @@ import { notFound } from "next/navigation";
 import { BlogNavigation } from "../blog-navigation";
 import { BlogCta } from "../blog-index";
 import { SiteFooter } from "@/components/qart/site-footer";
+import { formatDate } from "@/lib/blog-data";
 import {
-  blogPosts,
-  findPostBySlug,
-  formatDate,
-  getRelatedPosts,
-} from "@/lib/blog-data";
+  getBlogPostBySlug,
+  getBlogPosts,
+  getRelatedBlogPosts,
+} from "@/lib/sanity-blog";
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }));
+export async function generateStaticParams() {
+  const posts = await getBlogPosts();
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = findPostBySlug(slug);
+  const post = await getBlogPostBySlug(slug);
 
   if (!post) {
     return {
@@ -51,13 +52,13 @@ export async function generateMetadata({
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
-  const post = findPostBySlug(slug);
+  const [post, posts] = await Promise.all([getBlogPostBySlug(slug), getBlogPosts()]);
 
   if (!post) {
     notFound();
   }
 
-  const relatedPosts = getRelatedPosts(post);
+  const relatedPosts = getRelatedBlogPosts(post, posts);
 
   return (
     <main>

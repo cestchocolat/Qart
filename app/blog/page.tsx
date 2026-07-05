@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { BlogIndex } from "./blog-index";
-import { blogPosts } from "@/lib/blog-data";
+import { getBlogPosts } from "@/lib/sanity-blog";
 
 export const metadata = {
   title: "Bangkok Real Estate Journal",
@@ -11,10 +11,12 @@ export const metadata = {
   },
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const posts = await getBlogPosts();
+
   return (
     <Suspense fallback={null}>
-      <BlogIndex posts={blogPosts} />
+      <BlogIndex posts={posts} />
     </Suspense>
   );
 }
