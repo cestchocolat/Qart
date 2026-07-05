@@ -10,6 +10,29 @@ export type BlogAuthor = {
   bio: string;
 };
 
+export type BlogRichTextSpan = {
+  _key?: string;
+  _type: "span";
+  text?: string;
+  marks?: string[];
+};
+
+export type BlogRichTextBlock = {
+  _key?: string;
+  _type: "block" | "image";
+  style?: "normal" | "h2" | "h3" | "blockquote";
+  listItem?: "bullet" | "number";
+  level?: number;
+  children?: BlogRichTextSpan[];
+  markDefs?: {
+    _key: string;
+    _type: string;
+    href?: string;
+  }[];
+  assetUrl?: string;
+  alt?: string;
+};
+
 export type BlogPost = {
   title: string;
   slug: string;
@@ -22,6 +45,7 @@ export type BlogPost = {
   updatedAt: string;
   readingTime: number;
   content: BlogContentSection[];
+  richContent?: BlogRichTextBlock[];
   relatedPosts: string[];
 };
 

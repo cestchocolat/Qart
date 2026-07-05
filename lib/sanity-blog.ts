@@ -1,4 +1,4 @@
-import type { BlogContentSection, BlogPost } from "./blog-data";
+import type { BlogContentSection, BlogPost, BlogRichTextBlock } from "./blog-data";
 import { blogPosts } from "./blog-data";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "y8yvqb99";
@@ -11,7 +11,7 @@ type SanityPost = Partial<
   Omit<BlogPost, "author" | "content" | "relatedPosts">
 > & {
   author?: Partial<BlogPost["author"]> | null;
-  content?: Partial<BlogContentSection>[] | null;
+  content?: (Partial<BlogContentSection> | BlogRichTextBlock)[] | null;
   relatedPosts?: (string | null)[] | null;
 };
 
@@ -26,7 +26,14 @@ const postFields = `{
   publishedAt,
   updatedAt,
   readingTime,
-  content[]{id, heading, paragraphs},
+  content[]{
+    ...,
+    markDefs[]{...},
+    _type == "image" => {
+      ...,
+      "assetUrl": asset->url
+    }
+  },
   "relatedPosts": relatedPosts[]->slug.current
 }`;
 
@@ -58,9 +65,28 @@ function slugify(value: string) {
 }
 
 function normalizeContent(post: SanityPost): BlogContentSection[] {
-  const sections = post.content?.filter((section) => section.heading) ?? [];
+  const sections =
+    post.content?.filter(
+      (section): section is Partial<BlogContentSection> =>
+        "heading" in section && Boolean(section.heading),
+    ) ?? [];
 
   if (sections.length === 0) {
+    const richHeadings = (normalizeRichContent(post.content) ?? []).filter(
+      (block) => block._type === "block" && (block.style === "h2" || block.style === "h3"),
+    );
+
+    if (richHeadings.length > 0) {
+      return richHeadings.map((block) => {
+        const heading = getBlockText(block);
+        return {
+          id: block._key ?? slugify(heading),
+          heading,
+          paragraphs: [],
+        };
+      });
+    }
+
     return [
       {
         id: "overview",
@@ -76,6 +102,27 @@ function normalizeContent(post: SanityPost): BlogContentSection[] {
     paragraphs:
       section.paragraphs?.filter((paragraph): paragraph is string => Boolean(paragraph)) ?? [],
   }));
+}
+
+function normalizeRichContent(
+  content: SanityPost["content"],
+): BlogRichTextBlock[] | undefined {
+  const blocks = content?.filter(
+    (block): block is BlogRichTextBlock =>
+      ("_type" in block && block._type === "block") ||
+      ("_type" in block && block._type === "image"),
+  );
+
+  return blocks && blocks.length > 0 ? blocks : undefined;
+}
+
+export function getBlockText(block: BlogRichTextBlock) {
+  return (
+    block.children
+      ?.map((child) => child.text ?? "")
+      .join("")
+      .trim() || "Section"
+  );
 }
 
 function normalizePost(post: SanityPost): BlogPost | null {
@@ -103,6 +150,7 @@ function normalizePost(post: SanityPost): BlogPost | null {
     updatedAt: post.updatedAt ?? publishedAt,
     readingTime: post.readingTime ?? 5,
     content: normalizeContent(post),
+    richContent: normalizeRichContent(post.content),
     relatedPosts:
       post.relatedPosts?.filter((slug): slug is string => Boolean(slug)) ?? [],
   };

@@ -69,29 +69,53 @@ const post = {
     },
     {
       name: "content",
-      title: "Content Sections",
+      title: "Content",
       type: "array",
+      description: "Rich article body with headings, paragraphs, images, lists, quotes, and links.",
       of: [
         {
-          name: "section",
-          title: "Section",
-          type: "object",
+          type: "block",
+          styles: [
+            { title: "Normal", value: "normal" },
+            { title: "Heading 2", value: "h2" },
+            { title: "Heading 3", value: "h3" },
+            { title: "Quote", value: "blockquote" },
+          ],
+          lists: [
+            { title: "Bullet", value: "bullet" },
+            { title: "Numbered", value: "number" },
+          ],
+          marks: {
+            decorators: [
+              { title: "Strong", value: "strong" },
+              { title: "Emphasis", value: "em" },
+            ],
+            annotations: [
+              {
+                name: "link",
+                title: "Link",
+                type: "object",
+                fields: [
+                  {
+                    name: "href",
+                    title: "URL",
+                    type: "url",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          type: "image",
+          options: {
+            hotspot: true,
+          },
           fields: [
             {
-              name: "id",
-              title: "Anchor ID",
+              name: "alt",
+              title: "Alt Text",
               type: "string",
-            },
-            {
-              name: "heading",
-              title: "Heading",
-              type: "string",
-            },
-            {
-              name: "paragraphs",
-              title: "Paragraphs",
-              type: "array",
-              of: [{ type: "text" }],
             },
           ],
         },

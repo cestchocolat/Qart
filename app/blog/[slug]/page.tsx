@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import type React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BlogNavigation } from "../blog-navigation";
 import { BlogCta } from "../blog-index";
 import { SiteFooter } from "@/components/qart/site-footer";
+import type { BlogRichTextBlock, BlogRichTextSpan } from "@/lib/blog-data";
 import { formatDate } from "@/lib/blog-data";
 import {
+  getBlockText,
   getBlogPostBySlug,
   getBlogPosts,
   getRelatedBlogPosts,
@@ -102,14 +105,18 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <p>{post.author.bio}</p>
             </div>
 
-            {post.content.map((section) => (
-              <section id={section.id} key={section.id}>
-                <h2>{section.heading}</h2>
-                {section.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </section>
-            ))}
+            {post.richContent ? (
+              <RichArticleContent blocks={post.richContent} />
+            ) : (
+              post.content.map((section) => (
+                <section id={section.id} key={section.id}>
+                  <h2>{section.heading}</h2>
+                  {section.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </section>
+              ))
+            )}
 
             <div className="tag-list" aria-label="Article tags">
               {post.tags.map((tag) => (
@@ -145,4 +152,96 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <SiteFooter />
     </main>
   );
+}
+
+function RichArticleContent({ blocks }: { blocks: BlogRichTextBlock[] }) {
+  const elements = [];
+
+  for (let index = 0; index < blocks.length; index += 1) {
+    const block = blocks[index];
+
+    if (block.listItem) {
+      const listType = block.listItem;
+      const listItems = [];
+
+      while (index < blocks.length && blocks[index].listItem === listType) {
+        const listBlock = blocks[index];
+        listItems.push(
+          <li key={listBlock._key ?? index}>{renderSpans(listBlock.children, listBlock.markDefs)}</li>,
+        );
+        index += 1;
+      }
+
+      index -= 1;
+      const ListTag = listType === "number" ? "ol" : "ul";
+      elements.push(<ListTag key={block._key ?? `list-${index}`}>{listItems}</ListTag>);
+      continue;
+    }
+
+    if (block._type === "image" && block.assetUrl) {
+      elements.push(
+        <figure className="article-inline-image" key={block._key ?? block.assetUrl}>
+          <img src={block.assetUrl} alt={block.alt ?? ""} />
+          {block.alt ? <figcaption>{block.alt}</figcaption> : null}
+        </figure>,
+      );
+      continue;
+    }
+
+    if (block._type !== "block") {
+      continue;
+    }
+
+    const children = renderSpans(block.children, block.markDefs);
+
+    if (block.style === "h2" || block.style === "h3") {
+      const HeadingTag = block.style;
+      const heading = getBlockText(block);
+      elements.push(
+        <section id={block._key ?? heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")} key={block._key ?? heading}>
+          <HeadingTag>{children}</HeadingTag>
+        </section>,
+      );
+      continue;
+    }
+
+    if (block.style === "blockquote") {
+      elements.push(<blockquote key={block._key}>{children}</blockquote>);
+      continue;
+    }
+
+    elements.push(<p key={block._key}>{children}</p>);
+  }
+
+  return <>{elements}</>;
+}
+
+function renderSpans(
+  spans: BlogRichTextSpan[] = [],
+  markDefs: BlogRichTextBlock["markDefs"] = [],
+) {
+  return spans.map((span, index) => {
+    const marks = span.marks ?? [];
+    let node: React.ReactNode = span.text ?? "";
+
+    for (const mark of marks) {
+      if (mark === "strong") {
+        node = <strong>{node}</strong>;
+      } else if (mark === "em") {
+        node = <em>{node}</em>;
+      } else {
+        const link = markDefs.find((definition) => definition._key === mark && definition.href);
+
+        if (link?.href) {
+          node = (
+            <a href={link.href} rel="noreferrer" target={link.href.startsWith("http") ? "_blank" : undefined}>
+              {node}
+            </a>
+          );
+        }
+      }
+    }
+
+    return <span key={span._key ?? index}>{node}</span>;
+  });
 }

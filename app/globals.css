@@ -575,9 +575,64 @@ img {
   line-height: 1.08;
 }
 
+.article-content h3 {
+  margin: 32px 0 14px;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  font-weight: 600;
+  line-height: 1.14;
+}
+
 .article-content p {
   margin: 0 0 20px;
   font-size: 1.04rem;
+}
+
+.article-content a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.article-content blockquote {
+  border-left: 1px solid var(--gold);
+  margin: 30px 0;
+  padding: 6px 0 6px 24px;
+  color: var(--charcoal);
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: clamp(1.45rem, 2.5vw, 2rem);
+  line-height: 1.24;
+}
+
+.article-content ul,
+.article-content ol {
+  margin: 0 0 24px;
+  padding-left: 24px;
+  color: var(--muted);
+  font-size: 1.04rem;
+  line-height: 1.75;
+}
+
+.article-content li + li {
+  margin-top: 8px;
+}
+
+.article-inline-image {
+  overflow: hidden;
+  margin: 36px 0;
+  border-radius: 22px;
+}
+
+.article-inline-image img {
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+}
+
+.article-inline-image figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.82rem;
 }
 
 .tag-list {
