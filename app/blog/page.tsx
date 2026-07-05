@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { BlogIndex } from "./blog-index";
 import { blogPosts } from "@/lib/blog-data";
 
@@ -11,5 +12,9 @@ export const metadata = {
 };
 
 export default function BlogPage() {
-  return <BlogIndex posts={blogPosts} />;
+  return (
+    <Suspense fallback={null}>
+      <BlogIndex posts={blogPosts} />
+    </Suspense>
+  );
 }

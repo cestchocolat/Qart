@@ -46,7 +46,7 @@ const advisorAuthor: BlogAuthor = {
   bio: "Maya helps international clients compare premium Bangkok residences, commute patterns, lease terms, and lifestyle fit.",
 };
 
-export const blogPosts: BlogPost[] = [
+const coreBlogPosts: BlogPost[] = [
   {
     title: "Bangkok Luxury Condo Rental Guide for 2026",
     slug: "bangkok-luxury-condo-rental-guide",
@@ -367,7 +367,125 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    title: "The Quiet Details That Define a Luxury Bangkok Residence",
+    slug: "quiet-details-luxury-bangkok-residence",
+    excerpt:
+      "From arrival sequences to materials, service, and privacy, the best residences are often defined by what feels effortless.",
+    coverImage: "/assets/property-lounge.png",
+    category: "Market Guides",
+    tags: ["Luxury details", "Architecture", "Bangkok residences"],
+    author: advisorAuthor,
+    publishedAt: "2026-03-22",
+    updatedAt: "2026-04-08",
+    readingTime: 5,
+    relatedPosts: ["bangkok-luxury-condo-rental-guide", "family-friendly-bangkok-condos", "riverside-or-sukhumvit-bangkok-address"],
+    content: [
+      {
+        id: "arrival",
+        heading: "Notice the arrival sequence",
+        paragraphs: [
+          "A refined residence begins before the unit door. The driveway, lobby lighting, concierge rhythm, lift privacy, and corridor proportions all shape the first impression.",
+          "These small signals often reveal how carefully a building is operated and maintained.",
+        ],
+      },
+      {
+        id: "materials",
+        heading: "Look closely at materials",
+        paragraphs: [
+          "Natural stone, timber, hardware, lighting temperature, and appliance quality influence how a home feels over time. Luxury is less about decoration and more about materials aging gracefully.",
+          "A well-specified unit should feel calm, durable, and easy to live with.",
+        ],
+      },
+      {
+        id: "service",
+        heading: "Service should feel invisible",
+        paragraphs: [
+          "The best luxury buildings remove friction quietly. Maintenance, deliveries, parking, guest access, and security should feel coordinated without becoming intrusive.",
+          "When service is good, residents notice fewer interruptions and more ease.",
+        ],
+      },
+    ],
+  },
 ];
+
+const mockPostBlueprints = [
+  ["How to Compare Luxury Condos Near BTS Phrom Phong", "A practical guide to judging convenience, privacy, management quality, and long-term comfort around Phrom Phong.", "Market Guides", "Marque.jpg"],
+  ["Thonglor Condo Viewing Checklist for Busy Renters", "What to inspect during a private viewing when time is limited and the best units move quickly.", "Renting", "The strand.jpg"],
+  ["Pet-Friendly Living Around Lumphini and Wireless Road", "A refined look at buildings, walking routes, nearby green space, and lease questions for renters with pets.", "Pet-Friendly", "Sindhorn.jpg"],
+  ["A Newcomer's Guide to Bangkok Condo Facilities", "How pools, gyms, lounges, parking, and concierge services shape daily life in premium Bangkok residences.", "Expat Guides", "property-lounge.png"],
+  ["Choosing Between Asoke and Phrom Phong", "A lifestyle comparison for renters weighing transit access, dining, schools, parks, and building inventory.", "Neighborhoods", "The Esse.jpg"],
+  ["What Makes a Bangkok Penthouse Feel Private", "Views matter, but true privacy depends on lift access, floor plate, acoustic comfort, and building operations.", "Market Guides", "property-interior.png"],
+  ["How to Shortlist Condos Before You Arrive in Bangkok", "A relocation-friendly process for narrowing neighborhoods, buildings, budgets, and viewing priorities.", "Expat Guides", "consultation-atmosphere.png"],
+  ["Luxury Rental Negotiation: What Is Realistic", "How renters can approach price, repairs, furniture, move-in dates, and renewal terms with confidence.", "Renting", "Muniq 23.jpg"],
+  ["Where Quiet Luxury Lives in Sukhumvit", "A guide to calm side streets, low-density residences, and understated buildings along Bangkok's central corridor.", "Neighborhoods", "The Diplomat 39.jpg"],
+  ["Pet Policies in Bangkok Condos: What to Confirm", "The rules and cultural details that matter before signing a lease with a dog or cat in Bangkok.", "Pet-Friendly", "KHUN by yoo.jpg"],
+  ["How Families Evaluate Bangkok Luxury Residences", "Schools, storage, layouts, road access, and amenity quality all shape the right family rental decision.", "Market Guides", "39 by Sansiri.jpg"],
+  ["The Expat Move-In Timeline for Bangkok Rentals", "A step-by-step guide to search timing, documents, deposits, handover, and settling into a new residence.", "Expat Guides", "property-riverside.png"],
+] as const;
+
+const mockContent = (topic: string): BlogContentSection[] => [
+  {
+    id: "context",
+    heading: "Start with the lifestyle context",
+    paragraphs: [
+      `${topic} is best understood through the way a residence supports daily rhythm: commute, privacy, service, errands, wellness, and the feeling of arriving home.`,
+      "Qart recommends comparing buildings by lived experience first, then refining the shortlist by unit condition, view, furnishing, and lease terms.",
+    ],
+  },
+  {
+    id: "viewing",
+    heading: "Use viewings to test the details",
+    paragraphs: [
+      "A premium viewing should examine more than finishes. Light, acoustics, lift flow, parking, lobby service, storage, and maintenance standards often reveal whether a home will feel effortless.",
+      "Strong residences tend to make ordinary routines smoother rather than simply looking impressive in photos.",
+    ],
+  },
+  {
+    id: "decision",
+    heading: "Make the decision with clarity",
+    paragraphs: [
+      "Before committing, confirm deposit structure, included furnishings, repair obligations, pet terms if relevant, and the owner's expected renewal position.",
+      "The right lease should feel aligned with both lifestyle and logistics, especially for renters relocating or comparing several Bangkok neighborhoods.",
+    ],
+  },
+];
+
+const generatedBlogPosts: BlogPost[] = Array.from({ length: 72 }, (_, index) => {
+  const blueprint = mockPostBlueprints[index % mockPostBlueprints.length];
+  const volume = Math.floor(index / mockPostBlueprints.length) + 1;
+  const [baseTitle, excerpt, category, image] = blueprint;
+  const title = `${baseTitle}${volume > 1 ? `: Part ${volume}` : ""}`;
+  const slug = title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  const author = index % 2 === 0 ? qartAuthor : advisorAuthor;
+  const month = 3 + Math.floor(index / 24);
+  const day = (index % 24) + 1;
+  const publishedAt = `2026-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+  return {
+    title,
+    slug,
+    excerpt,
+    coverImage: `/assets/${image}`,
+    category,
+    tags: [category, "Bangkok real estate", "Luxury condos"],
+    author,
+    publishedAt,
+    updatedAt: publishedAt,
+    readingTime: 4 + (index % 5),
+    content: mockContent(baseTitle),
+    relatedPosts: [
+      "bangkok-luxury-condo-rental-guide",
+      "where-to-rent-thonglor",
+      "sukhumvit-luxury-rental-market",
+    ],
+  };
+});
+
+export const blogPosts: BlogPost[] = [...coreBlogPosts, ...generatedBlogPosts];
 
 export function findPostBySlug(slug: string) {
   return blogPosts.find((post) => post.slug === slug);

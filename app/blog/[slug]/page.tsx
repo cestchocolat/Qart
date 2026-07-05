@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BlogNavigation } from "../blog-navigation";
 import { BlogCta } from "../blog-index";
+import { SiteFooter } from "@/components/qart/site-footer";
 import {
   blogPosts,
   findPostBySlug,
@@ -59,6 +61,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <main>
+      <BlogNavigation />
       <article>
         <header className="article-hero">
           <div className="blog-shell article-header-grid">
@@ -138,6 +141,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       </section>
 
       <BlogCta />
+      <SiteFooter />
     </main>
   );
 }

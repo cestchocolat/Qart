@@ -2,17 +2,26 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { BlogNavigation } from "./blog-navigation";
+import { SiteFooter } from "@/components/qart/site-footer";
 import type { BlogPost } from "@/lib/blog-data";
 import { blogCategories, formatDate } from "@/lib/blog-data";
 
-const POSTS_PER_PAGE = 6;
+const POSTS_PER_PAGE = 9;
+
+function getPageNumber(value: string | null) {
+  const page = Number(value);
+  return Number.isInteger(page) && page > 0 ? page : 1;
+}
 
 export function BlogIndex({ posts }: { posts: BlogPost[] }) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
-  const [page, setPage] = useState(1);
-
-  const featuredPost = posts[0];
+  const requestedPage = getPageNumber(searchParams.get("page"));
 
   const filteredPosts = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -34,41 +43,38 @@ export function BlogIndex({ posts }: { posts: BlogPost[] }) {
   }, [category, posts, query]);
 
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
-  const currentPage = Math.min(page, totalPages);
+  const currentPage = Math.min(requestedPage, totalPages);
+  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
   const paginatedPosts = filteredPosts.slice(
     (currentPage - 1) * POSTS_PER_PAGE,
     currentPage * POSTS_PER_PAGE,
   );
 
+  function updatePage(nextPage: number) {
+    const nextParams = new URLSearchParams(searchParams.toString());
+    const clampedPage = Math.min(Math.max(1, nextPage), totalPages);
+
+    nextParams.set("page", String(clampedPage));
+
+    const queryString = nextParams.toString();
+    router.push(queryString ? `${pathname}?${queryString}` : pathname, {
+      scroll: false,
+    });
+  }
+
   function updateCategory(nextCategory: string) {
     setCategory(nextCategory);
-    setPage(1);
+    updatePage(1);
   }
 
   function updateQuery(nextQuery: string) {
     setQuery(nextQuery);
-    setPage(1);
+    updatePage(1);
   }
 
   return (
     <main className="journal-page">
-      <header className="journal-header">
-        <div className="blog-shell journal-header-inner">
-          <Link className="journal-brand" href="/" aria-label="QART home">
-            QART
-          </Link>
-          <nav className="journal-nav" aria-label="Journal navigation">
-            <Link href="/">Properties</Link>
-            <Link href="/#areas">Areas</Link>
-            <Link href="/#about">About</Link>
-            <Link href="/#contact">Contact</Link>
-            <Link href="/blog">Blog</Link>
-          </nav>
-          <Link className="journal-header-cta" href="/#consultation">
-            Private Consultation
-          </Link>
-        </div>
-      </header>
+      <BlogNavigation />
 
       <section className="journal-hero">
         <div className="blog-shell journal-hero-inner">
@@ -82,32 +88,15 @@ export function BlogIndex({ posts }: { posts: BlogPost[] }) {
           </div>
           <Link
             className="journal-hero-image"
-            href={`/blog/${featuredPost.slug}`}
-            aria-label={`Read featured article: ${featuredPost.title}`}
+            href={`/blog/${posts[0].slug}`}
+            aria-label={`Read featured article: ${posts[0].title}`}
           >
-            <img src={featuredPost.coverImage} alt="" />
+            <img src={posts[0].coverImage} alt="" />
           </Link>
         </div>
       </section>
 
-      <section className="blog-shell journal-feature-section">
-        <Link className="journal-feature-card" href={`/blog/${featuredPost.slug}`}>
-          <div className="journal-feature-image">
-            <img src={featuredPost.coverImage} alt="" />
-          </div>
-          <div className="journal-feature-copy">
-            <div className="journal-card-meta">
-              <span>{featuredPost.category}</span>
-              <span>{formatDate(featuredPost.publishedAt)}</span>
-            </div>
-            <h2>{featuredPost.title}</h2>
-            <p>{featuredPost.excerpt}</p>
-            <span className="journal-read-link">Read feature</span>
-          </div>
-        </Link>
-      </section>
-
-      <section className="blog-shell blog-toolbar" aria-label="Blog filters">
+      <section className="blog-shell blog-toolbar journal-toolbar" aria-label="Blog filters">
         <div className="category-list">
           {blogCategories.map((item) => (
             <button
@@ -131,7 +120,7 @@ export function BlogIndex({ posts }: { posts: BlogPost[] }) {
         </label>
       </section>
 
-      <section className="blog-shell blog-section">
+      <section className="blog-shell blog-section journal-articles-section">
         <div className="journal-section-heading">
           <div>
             <p className="journal-label">Latest Articles</p>
@@ -160,17 +149,25 @@ export function BlogIndex({ posts }: { posts: BlogPost[] }) {
           <button
             type="button"
             disabled={currentPage === 1}
-            onClick={() => setPage((value) => Math.max(1, value - 1))}
+            onClick={() => updatePage(currentPage - 1)}
           >
             Previous
           </button>
-          <span>
-            Page {currentPage} of {totalPages}
-          </span>
+          {pageNumbers.map((pageNumber) => (
+            <button
+              aria-current={pageNumber === currentPage ? "page" : undefined}
+              className={`pagination-number${pageNumber === currentPage ? " active" : ""}`}
+              key={pageNumber}
+              type="button"
+              onClick={() => updatePage(pageNumber)}
+            >
+              {pageNumber}
+            </button>
+          ))}
           <button
             type="button"
             disabled={currentPage === totalPages}
-            onClick={() => setPage((value) => Math.min(totalPages, value + 1))}
+            onClick={() => updatePage(currentPage + 1)}
           >
             Next
           </button>
@@ -178,6 +175,7 @@ export function BlogIndex({ posts }: { posts: BlogPost[] }) {
       </section>
 
       <BlogCta />
+      <SiteFooter />
     </main>
   );
 }
